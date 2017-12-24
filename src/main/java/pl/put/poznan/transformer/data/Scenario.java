@@ -6,7 +6,7 @@ import java.util.List;
 
 
 
-public class Scenario {
+public abstract class Scenario {
 	private Scenario parent;
 	private List<Scenario> childList;
 	private String name ;
@@ -26,10 +26,7 @@ public class Scenario {
 		childList.add(newStep);
 	}
 	
-	public void addStep(String name, String content, Integer level ) {
-		Scenario newScenario = new Scenario(this, name, content, level);
-		childList.add(newScenario);
-	}
+
 	
 	public void removeStep(Integer number) {
 		//#todo usuniecie wszystkich dzieci lub przestawienie ich wyzej
