@@ -16,8 +16,9 @@ public class ScenarioDto implements Serializable {
     private List<ScenarioStepDto> steps;
 
     @JsonCreator
-    public ScenarioDto(@JsonProperty(required = true) String title, List<String> actors,
-                       @JsonProperty(required = true) List<ScenarioStepDto> steps) {
+    public ScenarioDto(@JsonProperty(value = "title", required = true) String title,
+                       @JsonProperty(value = "actors") List<String> actors,
+                       @JsonProperty(value = "steps", required = true) List<ScenarioStepDto> steps) {
 
         this.title = title;
         this.actors = actors;
@@ -53,7 +54,7 @@ public class ScenarioDto implements Serializable {
 
         StringBuilder builder = new StringBuilder();
 
-        builder.append("Scenario");
+        builder.append("Scenario\n");
         builder.append("\tTitle: " + title + "\n");
         builder.append("\tActors: " + StringUtils.join(actors, ',') + "\n");
         builder.append("\tSteps:\n");

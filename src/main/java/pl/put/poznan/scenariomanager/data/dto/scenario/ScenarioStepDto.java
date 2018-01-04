@@ -1,5 +1,8 @@
 package pl.put.poznan.scenariomanager.data.dto.scenario;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.io.Serializable;
 
 public class ScenarioStepDto implements Serializable {
@@ -7,7 +10,9 @@ public class ScenarioStepDto implements Serializable {
     private String text;
     private ScenarioStepTypeDto type;
 
-    public ScenarioStepDto(String text, ScenarioStepTypeDto type) {
+    @JsonCreator
+    public ScenarioStepDto(@JsonProperty(value = "text", required = true) String text,
+                           @JsonProperty(value = "type", required = true) ScenarioStepTypeDto type) {
 
         this.text = text;
         this.type = type;
