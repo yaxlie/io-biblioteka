@@ -53,4 +53,8 @@ public class Scenario {
     public void setActors(List<String> actors) {
         this.actors = new ArrayList<>(actors);
     }
+
+    public List<ScenarioStep> getSteps() {
+        return Collections.unmodifiableList(steps);
+    }
 }

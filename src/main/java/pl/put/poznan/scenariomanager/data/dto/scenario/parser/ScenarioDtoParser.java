@@ -51,22 +51,24 @@ public class ScenarioDtoParser {
 
     private void handleStep(ScenarioStepDto step, ScenarioBuilder builder) throws InvalidScenarioStructureException {
 
+        String stepText = step.getText().trim();
+
         switch (step.getType()) {
 
             case SIMPLE:
-                builder.simpleStep(step.getText());
+                builder.simpleStep(stepText);
                 break;
             case ACTOR:
-                builder.actorStep(step.getText());
+                builder.actorStep(stepText);
                 break;
             case FOR_EACH:
-                builder.forEachStep(step.getText());
+                builder.forEachStep(stepText);
                 break;
             case IF:
-                builder.ifStep(step.getText());
+                builder.ifStep(stepText);
                 break;
             case ELSE:
-                builder.elseStep(step.getText());
+                builder.elseStep(stepText);
                 break;
             case END:
                 builder.endTag();

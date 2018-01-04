@@ -55,15 +55,14 @@ public class ScenarioBuilder {
 
     public void elseStep(String step) throws InvalidScenarioStructureException {
 
-        if (!step.toLowerCase().equals("ELSE"))
+        if (!step.toLowerCase().equals("else"))
             throw new InvalidScenarioStructureException("Else step should not contain any additional characters");
 
-        List<ScenarioStep> currentSteps = lastStep.getSteps();
-
-        if (currentSteps.isEmpty() || !(currentSteps.get(currentSteps.size() - 1) instanceof IfScenarioStep))
+        if (!(lastStep instanceof IfScenarioStep))
             throw new InvalidScenarioStructureException("Before an else step there should be an if step");
 
-        IfScenarioStep ifStep = (IfScenarioStep) currentSteps.get(currentSteps.size() - 1);
+        IfScenarioStep ifStep = (IfScenarioStep) lastStep;
+        lastStep = (CompositeScenarioStep) lastStep.getParent();
 
         conditionalStep(new ElseScenarioStep(ifStep));
     }
