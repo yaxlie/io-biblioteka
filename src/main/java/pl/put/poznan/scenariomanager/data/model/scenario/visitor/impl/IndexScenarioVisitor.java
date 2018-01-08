@@ -42,6 +42,14 @@ public class IndexScenarioVisitor implements ScenarioVisitor {
         return stringBuilder.toString();
     }
 
+    public String IndexScenario(Scenario scenario){
+
+
+
+        scenario.inspect(this);
+        return this.getResult();
+    }
+
     public static String exampleUsage() {
 
         String title = "Dodanie nowej książki";
@@ -75,8 +83,8 @@ public class IndexScenarioVisitor implements ScenarioVisitor {
         Scenario scenario = new Scenario(title, actors, steps);
 
         IndexScenarioVisitor sampleVisitor = new IndexScenarioVisitor();
-        scenario.inspect(sampleVisitor);
+        return sampleVisitor.IndexScenario(scenario);
 
-        return sampleVisitor.getResult();
+
     }
 }
