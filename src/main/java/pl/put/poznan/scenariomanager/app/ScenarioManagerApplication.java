@@ -2,6 +2,7 @@ package pl.put.poznan.scenariomanager.app;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import pl.put.poznan.scenariomanager.data.model.scenario.visitor.impl.IndexScenarioVisitor;
 
 
 @SpringBootApplication(scanBasePackages = {

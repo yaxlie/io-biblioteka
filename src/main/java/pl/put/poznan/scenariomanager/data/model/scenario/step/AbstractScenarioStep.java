@@ -6,11 +6,32 @@ public abstract class AbstractScenarioStep implements ScenarioStep {
 
     private String description;
     private ScenarioStep parent;
+    private String index;
+    private int nextChildIndex;
+
+    @Override
+    public int getNextChildIndex() {
+        nextChildIndex=nextChildIndex+1;
+        return nextChildIndex;
+    }
+
+    @Override
+    public void setIndex(String index) {
+        this.index = index;
+    }
+
+    @Override
+    public String getIndex() {
+
+        return index;
+    }
 
     public AbstractScenarioStep(String description) {
 
         this.description = description;
         this.parent = null;
+        this.index=null;
+        this.nextChildIndex=0;
     }
 
     @Override

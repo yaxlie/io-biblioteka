@@ -46,4 +46,22 @@ public interface ScenarioStep {
      * @param visitor A visitor object that inspects a scenario step hierarchy
      */
     void accept(ScenarioVisitor visitor);
+
+    /**
+     * Sets index of a step (e.g 4.2.2)
+     * @param index String representing index of a step
+     */
+    void setIndex(String index);
+
+    /** Gets index of a step
+     * @return String representing index of a step
+     */
+    String getIndex();
+
+    /**
+     * Gets next index of a child step of a specific step
+     * @return Int specifying index
+     */
+    int getNextChildIndex();
+
 }
