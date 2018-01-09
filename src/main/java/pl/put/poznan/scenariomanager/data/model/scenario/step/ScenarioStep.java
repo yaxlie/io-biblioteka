@@ -2,6 +2,8 @@ package pl.put.poznan.scenariomanager.data.model.scenario.step;
 
 import pl.put.poznan.scenariomanager.data.model.scenario.visitor.ScenarioVisitor;
 
+import java.util.List;
+
 /**
  * Represents a step in a scenario step hierarchy
  * It can be a single step or a step composed of a condition step and multiple substeps
@@ -63,5 +65,12 @@ public interface ScenarioStep {
      * @return Int specifying index
      */
     int getNextChildIndex();
+
+
+    /**
+     * Gets list of child steps of specific step
+     * @return List of Child steps
+     */
+    List<ScenarioStep> getSteps();
 
 }

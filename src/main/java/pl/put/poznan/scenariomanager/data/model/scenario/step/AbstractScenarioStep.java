@@ -2,6 +2,8 @@ package pl.put.poznan.scenariomanager.data.model.scenario.step;
 
 import pl.put.poznan.scenariomanager.data.model.scenario.visitor.ScenarioVisitor;
 
+import java.util.List;
+
 public abstract class AbstractScenarioStep implements ScenarioStep {
 
     private String description;
@@ -60,5 +62,9 @@ public abstract class AbstractScenarioStep implements ScenarioStep {
 
     public String getDescription() {
         return description;
+    }
+
+    public  List<ScenarioStep> getSteps(){
+        return null;
     }
 }

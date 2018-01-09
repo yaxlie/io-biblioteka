@@ -29,6 +29,7 @@ public class CompositeScenarioStep extends AbstractScenarioStep {
         step.setParent(this);
     }
 
+    @Override
     public List<ScenarioStep> getSteps() {
         return childSteps;
     }
