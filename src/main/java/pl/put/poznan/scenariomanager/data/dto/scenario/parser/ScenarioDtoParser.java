@@ -66,6 +66,7 @@ public class ScenarioDtoParser {
                 break;
             case IF:
                 builder.ifStep(stepText);
+                System.out.println("if");
                 break;
             case ELSE:
                 builder.elseStep(stepText);
