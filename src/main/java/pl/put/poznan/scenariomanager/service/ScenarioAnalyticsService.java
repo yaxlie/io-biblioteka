@@ -24,7 +24,7 @@ public interface ScenarioAnalyticsService {
      * Formats scenario steps - adds indexing to the steps e.g. 1.2.3., 1.2.4., 1.3.
      *
      * @param scenario
-     * @return
+     * @return Formatted scenario
      */
     String getNumberedSteps(Scenario scenario);
 }
