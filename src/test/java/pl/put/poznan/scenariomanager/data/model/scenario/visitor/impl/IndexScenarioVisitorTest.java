@@ -14,9 +14,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
- *
- */
+
 public class IndexScenarioVisitorTest {
 
     private IndexScenarioVisitor indexScenarioVisitor;
@@ -25,6 +23,53 @@ public class IndexScenarioVisitorTest {
     @Before
     public void setUp() {
         indexScenarioVisitor=new IndexScenarioVisitor();
+    }
+
+    @Test
+    public void testIndexScenario() throws Exception {
+
+        runScenarioIndexing();
+
+        List<ScenarioStep> stepList =scenario.getSteps();
+        assertEquals(stepList.get(3).getSteps().get(2).getSteps().get(2).getIndex(),"4.3.3");
+
+    }
+
+    @Test
+    public void testChildIndexScenario() throws Exception {
+
+        runScenarioIndexing();
+
+        List<ScenarioStep> stepList =scenario.getSteps();
+        assertEquals(stepList.get(3).getSteps().get(2).getNextChildIndex(),5);
+
+    }
+
+    @Test
+    public void testWholeIndexedScenario() {
+
+        String result = runScenarioIndexing();
+
+        String expected =
+                "1. Bibliotekarz wybiera opcje dodania nowej pozycji książkowej.\n" +
+                "2. Wyświetla się formularz.\n" +
+                "3. Bibliotekarz podaje dane książki.\n" +
+                "4. IF: Bibliotekarz pragnie dodać egzemplarze książki\n" +
+                "4.1. Bibliotekarz wybiera opcję definiowania egzemplarzy\n" +
+                "4.2. System prosi o podanie danych egzemplarza\n" +
+                "4.3. FOR EACH egzemplarz:\n" +
+                "4.3.1. Bibliotekarz wybiera opcję dodania egzemplarza\n" +
+                "4.3.2. System prosi o podanie danych egzemplarza\n" +
+                "4.3.3. Bibliotekarz podaje dane egzemplarza i zatwierdza.\n" +
+                "4.3.4. System informuje o poprawnym dodaniu egzemplarza i prezentuje zaktualizowaną listę egzemplarzy.\n" +
+                "5. Bibliotekarz zatwierdza dodanie książki.\n" +
+                "6. System informuje o poprawnym dodaniu książki.\n";
+
+        assertEquals(expected, result);
+    }
+
+    private String runScenarioIndexing() {
+
         String title = "Dodanie nowej książki";
         List<String> actors = Arrays.asList("System", "Bibliotekarz");
 
@@ -54,27 +99,7 @@ public class IndexScenarioVisitorTest {
         List<ScenarioStep> steps = Arrays.asList(step1, step2, step3, step4, step5, step6);
 
         scenario = new Scenario(title, actors, steps);
-        indexScenarioVisitor.IndexScenario(scenario);
-
-    }
-
-
-
-    @Test
-    public void testIndexScenario() throws Exception {
-
-
-        List<ScenarioStep> stepList =scenario.getSteps();
-        assertEquals(stepList.get(3).getSteps().get(2).getSteps().get(2).getIndex(),"4.3.3");
-
-    }
-
-    @Test
-    public void testChildIndexScenario() throws Exception {
-
-        List<ScenarioStep> stepList =scenario.getSteps();
-        assertEquals(stepList.get(3).getSteps().get(2).getNextChildIndex(),5);
-
+        return indexScenarioVisitor.IndexScenario(scenario);
     }
 
 }

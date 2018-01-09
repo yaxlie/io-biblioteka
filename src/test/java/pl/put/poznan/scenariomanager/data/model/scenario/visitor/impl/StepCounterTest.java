@@ -7,7 +7,6 @@ import org.junit.Test;
 
 import pl.put.poznan.scenariomanager.data.model.scenario.step.impl.ActorScenarioStep;
 import pl.put.poznan.scenariomanager.data.model.scenario.step.impl.SimpleScenarioStep;
-import pl.put.poznan.stepCounter.StepCounter;
 
 public class StepCounterTest {
 
