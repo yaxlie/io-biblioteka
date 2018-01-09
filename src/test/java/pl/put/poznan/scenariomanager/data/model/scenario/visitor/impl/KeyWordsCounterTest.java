@@ -1,4 +1,4 @@
-package visitor;
+package pl.put.poznan.scenariomanager.data.model.scenario.visitor.impl;
 
 import org.junit.Before;
 import org.junit.Test;
