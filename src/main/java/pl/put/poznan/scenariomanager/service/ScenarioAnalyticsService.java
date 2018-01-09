@@ -2,6 +2,9 @@ package pl.put.poznan.scenariomanager.service;
 
 import pl.put.poznan.scenariomanager.data.model.scenario.Scenario;
 
+/**
+ * Contains scenario analysis operations
+ */
 public interface ScenarioAnalyticsService {
 
     /**
