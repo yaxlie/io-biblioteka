@@ -1,4 +1,4 @@
-package pl.put.poznan.stepCounter;
+package pl.put.poznan.scenariomanager.data.model.scenario.visitor.impl;
 
 import pl.put.poznan.scenariomanager.data.model.scenario.step.ScenarioStep;
 import pl.put.poznan.scenariomanager.data.model.scenario.visitor.ScenarioVisitor;
