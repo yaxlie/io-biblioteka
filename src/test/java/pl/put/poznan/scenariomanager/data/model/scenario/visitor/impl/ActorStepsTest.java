@@ -17,32 +17,32 @@ import static org.junit.Assert.assertEquals;
 public class ActorStepsTest {
 
 
-    private ActorVisitor actorVisitor;
+    private NotActorVisitor notActorVisitor;
 
     @Before
     public void setUp() {
-        actorVisitor = new ActorVisitor();
+        notActorVisitor = new NotActorVisitor();
     }
 
     @Test
     public void testCounter1(){
         Scenario scenario = scenario1(1);
-        scenario.inspect(actorVisitor);
-        assertEquals(actorVisitor.getNoActorSteps().size(), 10);
+        scenario.inspect(notActorVisitor);
+        assertEquals(notActorVisitor.getNoActorSteps().size(), 3);
     }
 
     @Test
     public void testCounter2(){
         Scenario scenario = scenario1(2);
-        scenario.inspect(actorVisitor);
-        assertEquals(actorVisitor.getNoActorSteps().size(), 9);
+        scenario.inspect(notActorVisitor);
+        assertEquals(notActorVisitor.getNoActorSteps().size(), 4);
     }
 
     @Test
     public void testCounter3(){
         Scenario scenario = scenario1(3);
-        scenario.inspect(actorVisitor);
-        assertEquals(actorVisitor.getNoActorSteps().size(), 1);
+        scenario.inspect(notActorVisitor);
+        assertEquals(notActorVisitor.getNoActorSteps().size(), 0);
     }
 
     private Scenario scenario1(int i) {
@@ -78,7 +78,7 @@ public class ActorStepsTest {
 
         switch (i){
             case 2:
-                steps = Arrays.asList(step1, step2, step3, step4, step5);
+                steps = Arrays.asList(step1, step2, step3, step4, step2);
                 break;
             case 3:
                 steps = Arrays.asList(step1);

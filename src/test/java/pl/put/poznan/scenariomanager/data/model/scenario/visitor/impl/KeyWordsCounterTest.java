@@ -3,10 +3,8 @@ package pl.put.poznan.scenariomanager.data.model.scenario.visitor.impl;
 import org.junit.Before;
 import org.junit.Test;
 import pl.put.poznan.scenariomanager.data.model.scenario.Scenario;
-import pl.put.poznan.scenariomanager.data.model.scenario.builder.ScenarioBuilder;
 import pl.put.poznan.scenariomanager.data.model.scenario.step.ScenarioStep;
 import pl.put.poznan.scenariomanager.data.model.scenario.step.impl.*;
-import pl.put.poznan.scenariomanager.data.model.scenario.visitor.impl.KeyWordsVisitor;
 
 import java.util.Arrays;
 import java.util.List;
