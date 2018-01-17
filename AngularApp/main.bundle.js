@@ -38,7 +38,7 @@ module.exports = module.exports.toString();
 /***/ "../../../../../src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n\n <p>Title</p><input [(ngModel)]=\"file.title\">\n <p>Actors</p><input [(ngModel)]=\"actors\">\n <p>Content</p><textarea [(ngModel)]=\"data\"></textarea>\n<button (click)=\"calculateJson()\">calculate</button>\n\n<div>\n\n"
+module.exports = "<!--The content below is only a placeholder and can be replaced.-->\n\n <p>Title</p><input [(ngModel)]=\"file.title\">\n <p>Actors</p><input [(ngModel)]=\"actors\">\n <p>Content</p><textarea [(ngModel)]=\"data\"></textarea>\n<button (click)=\"calculateJson()\">calculate</button>\n<p>Uri</p><input [(ngModel)]=\"path\">\n<div>\n\n"
 
 /***/ }),
 
@@ -85,7 +85,7 @@ var AppComponent = /** @class */ (function () {
         this.jsonArray = [];
     }
     AppComponent.prototype.postData = function () {
-        this.handler = this.http.post("https://httpbin.org/post", this.file).subscribe();
+        this.handler = this.http.post(this.path, this.file).subscribe();
     };
     AppComponent.prototype.calculateJson = function () {
         this.file.actors = this.actors.split(" ");
