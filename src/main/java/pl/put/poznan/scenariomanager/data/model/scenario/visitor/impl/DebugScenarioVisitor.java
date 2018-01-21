@@ -11,19 +11,19 @@ import pl.put.poznan.scenariomanager.data.model.scenario.visitor.ScenarioVisitor
 import java.util.Arrays;
 import java.util.List;
 
-public class SampleScenarioVisitor implements ScenarioVisitor {
+public class DebugScenarioVisitor implements ScenarioVisitor {
 
     private StringBuilder stringBuilder;
 
-    public SampleScenarioVisitor() {
+    public DebugScenarioVisitor() {
         this.stringBuilder = new StringBuilder();
     }
 
     @Override
     public void visit(ScenarioStep step) {
 
-        stringBuilder.append("Visiting step with description: \"" + step.getDescription() + "\"");
-        stringBuilder.append("\tNesting level is equal to: " + Integer.toString(step.getNestingLevel()));
+        stringBuilder.append("Visiting step with description: \"" + step.getDescription() + "\"\n");
+        stringBuilder.append("\tNesting level is equal to: " + Integer.toString(step.getNestingLevel()) + "\n");
     }
 
     public String getResult() {
@@ -62,7 +62,7 @@ public class SampleScenarioVisitor implements ScenarioVisitor {
 
         Scenario scenario = new Scenario(title, actors, steps);
 
-        SampleScenarioVisitor sampleVisitor = new SampleScenarioVisitor();
+        DebugScenarioVisitor sampleVisitor = new DebugScenarioVisitor();
         scenario.inspect(sampleVisitor);
 
         return sampleVisitor.getResult();
