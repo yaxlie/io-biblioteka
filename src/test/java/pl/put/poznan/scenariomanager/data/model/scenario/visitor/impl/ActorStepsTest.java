@@ -12,36 +12,37 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by Marcin on 09.01.2018.
+ * Created by Marcin on 11.01.2018.
  */
-public class KeyWordsCounterTest {
+public class ActorStepsTest {
 
-    private KeyWordsVisitor keyWordsVisitor;
+
+    private NotActorVisitor notActorVisitor;
 
     @Before
     public void setUp() {
-        keyWordsVisitor = new KeyWordsVisitor();
+        notActorVisitor = new NotActorVisitor();
     }
 
     @Test
     public void testCounter1(){
         Scenario scenario = scenario1(1);
-        scenario.inspect(keyWordsVisitor);
-        assertEquals(keyWordsVisitor.getIntResult(), 2);
+        scenario.inspect(notActorVisitor);
+        assertEquals(notActorVisitor.getNoActorSteps().size(), 3);
     }
 
     @Test
     public void testCounter2(){
         Scenario scenario = scenario1(2);
-        scenario.inspect(keyWordsVisitor);
-        assertEquals(keyWordsVisitor.getIntResult(), 4);
+        scenario.inspect(notActorVisitor);
+        assertEquals(notActorVisitor.getNoActorSteps().size(), 4);
     }
 
     @Test
     public void testCounter3(){
         Scenario scenario = scenario1(3);
-        scenario.inspect(keyWordsVisitor);
-        assertEquals(keyWordsVisitor.getIntResult(), 0);
+        scenario.inspect(notActorVisitor);
+        assertEquals(notActorVisitor.getNoActorSteps().size(), 0);
     }
 
     private Scenario scenario1(int i) {
@@ -77,7 +78,7 @@ public class KeyWordsCounterTest {
 
         switch (i){
             case 2:
-                steps = Arrays.asList(step1, step2, step3, step4, step5, step6, step7, step4);
+                steps = Arrays.asList(step1, step2, step3, step4, step2);
                 break;
             case 3:
                 steps = Arrays.asList(step1);

@@ -2,6 +2,8 @@ package pl.put.poznan.scenariomanager.service;
 
 import pl.put.poznan.scenariomanager.data.model.scenario.Scenario;
 
+import java.util.List;
+
 /**
  * Contains scenario analysis operations
  */
@@ -30,4 +32,12 @@ public interface ScenarioAnalyticsService {
      * @return Formatted scenario
      */
     String getNumberedSteps(Scenario scenario);
+
+    /**
+     * Find and gets all non actor steps in the scenario
+     *
+     * @param scenario Analysed scenario
+     * @return List of scenario steps in text format
+     */
+    List<String> getNonActorSteps(Scenario scenario);
 }

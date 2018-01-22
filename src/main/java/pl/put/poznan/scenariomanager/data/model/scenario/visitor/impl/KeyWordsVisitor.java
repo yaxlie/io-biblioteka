@@ -6,9 +6,6 @@ import pl.put.poznan.scenariomanager.data.model.scenario.visitor.ScenarioVisitor
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by Marcin on 09.01.2018.
- */
 public class KeyWordsVisitor implements ScenarioVisitor{
 
     private final static List keyWordsClasses = Arrays.asList("IfScenarioStep", "ForEachScenarioStep", "elseScenarioStep");
