@@ -11,6 +11,8 @@ import pl.put.poznan.scenariomanager.data.dto.scenario.parser.ScenarioParseExcep
 import pl.put.poznan.scenariomanager.data.model.scenario.Scenario;
 import pl.put.poznan.scenariomanager.service.ScenarioAnalyticsService;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/scenario")
@@ -112,6 +114,35 @@ public class ScenarioAnalysisController {
         }
 
         return new ResponseEntity<>(scenarioAnalyticsService.getNumberedSteps(parsedScenario), HttpStatus.OK);
+    }
+
+
+    @RequestMapping(value = "/nonactor", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<List<String>> nonActorStepsRequest(@RequestBody ScenarioDto scenario) {
+
+        logger.debug("\n" + scenario.toString());
+
+        ScenarioDtoParser scenarioParser = new ScenarioDtoParser();
+
+        try
+        {
+            Scenario parsedScenario = scenarioParser.parse(scenario);
+            return new ResponseEntity<>(scenarioAnalyticsService.getNonActorSteps(parsedScenario), HttpStatus.OK);
+
+        } catch (ScenarioParseException e) {
+
+            logger.error("Failed to parse scenario. " + e.getMessage());
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e) {
+
+            logger.error("Unexpected error occurred during scenario parse operation");
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
 
