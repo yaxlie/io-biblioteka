@@ -96,7 +96,7 @@ public class ScenarioBuilder {
     private void conditionalStep(ConditionalScenarioStep conditionalStep) {
 
         log.debug(String.format("Adding conditional step - creating new nesting level.\nNew nesting level is: %d",
-                lastStep.getNestingLevel() + 1));
+                lastStep.getNestingLevel()));
 
         lastStep.addStep(conditionalStep);
         lastStep = conditionalStep;
