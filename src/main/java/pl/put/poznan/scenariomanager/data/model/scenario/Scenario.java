@@ -36,6 +36,7 @@ public class Scenario {
 
     public void addStep(ScenarioStep step) {
         steps.add(step);
+        step.setParent(null);
     }
 
     public String getTitle() {
