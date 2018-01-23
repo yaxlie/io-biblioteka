@@ -41,5 +41,14 @@ public interface ScenarioAnalyticsService {
      */
     List<String> getNonActorSteps(Scenario scenario);
 
-
+    /**
+     * Gets numbered scenario steps, which nesting level is not greater that the specified nesting level
+     * In case of level equal to 1, only root steps are fetched
+     * If level is 2, also children steps of root steps are also collected, and so on...
+     *
+     * @param scenario Analysed scenario
+     * @param level Specified scenario nesting level
+     * @return Numbered scenario steps,
+     */
+    String getStepsWithLevelLimit(Scenario scenario, int level);
 }

@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import pl.put.poznan.scenariomanager.data.model.scenario.Scenario;
 import pl.put.poznan.scenariomanager.data.model.scenario.step.ScenarioStep;
-import pl.put.poznan.scenariomanager.data.model.scenario.visitor.impl.IndexScenarioVisitor;
-import pl.put.poznan.scenariomanager.data.model.scenario.visitor.impl.KeyWordsVisitor;
-import pl.put.poznan.scenariomanager.data.model.scenario.visitor.impl.NotActorVisitor;
-import pl.put.poznan.scenariomanager.data.model.scenario.visitor.impl.StepCounter;
+import pl.put.poznan.scenariomanager.data.model.scenario.visitor.impl.*;
 import pl.put.poznan.scenariomanager.service.ScenarioAnalyticsService;
 
 import java.util.List;
@@ -64,5 +61,13 @@ public class ScenarioAnalyticsServiceImpl implements ScenarioAnalyticsService {
         List<ScenarioStep> steps = visitor.getNoActorSteps();
 
         return steps.stream().map(ScenarioStep::getDescription).collect(Collectors.toList());
+    }
+
+    @Override
+    public String getStepsWithLevelLimit(Scenario scenario, int level) {
+
+        LevelScenarioVisitor visitor = new LevelScenarioVisitor();
+
+        return visitor.levelScenario(scenario, level);
     }
 }

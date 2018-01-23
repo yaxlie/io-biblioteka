@@ -151,7 +151,39 @@ public class ScenarioAnalysisController {
     }
 
 
-    private Scenario parseScenario(ScenarioDto scenarioDto) throws Exception {
+    @RequestMapping(value = "/levellimit", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<String> limitedStepsRequest(@RequestBody ScenarioDto scenario,
+                                                            @RequestParam(value = "level") int level) {
+
+        log.info("Received limit steps with level request...");
+
+        try
+        {
+            Scenario parsedScenario = parseScenario(scenario);
+            String nonActorSteps = scenarioAnalyticsService.getStepsWithLevelLimit(parsedScenario, level);
+
+            log.info("Successfully limited steps steps.");
+
+            return new ResponseEntity<>(nonActorSteps, HttpStatus.OK);
+
+        } catch (ScenarioParseException e) {
+
+            log.error("Failed to parse scenario. " + e.getMessage());
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e) {
+
+            log.error("Unexpected error occurred during scenario parse operation");
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    private Scenario parseScenario(ScenarioDto scenarioDto) throws ScenarioParseException {
 
         log.debug("Received given scenario in the request:\n" + scenarioDto.toString());
 
