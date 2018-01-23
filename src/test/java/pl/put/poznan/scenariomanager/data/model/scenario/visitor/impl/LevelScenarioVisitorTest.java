@@ -52,7 +52,7 @@ public class LevelScenarioVisitorTest {
 
         when(mockStep.getParent()).thenReturn(new SimpleScenarioStep("Wyświetla się formularz."));
         levelScenarioVisitor.visit(mockStep);
-        verify(mockStep,times(4)).getParent();
+        verify(mockStep,times(3)).getParent();
 
 
     }
@@ -60,7 +60,7 @@ public class LevelScenarioVisitorTest {
     @Test
     public void testLevel1() {
 
-        String result = runScenarioLeveling(1);
+        String result = runScenarioLeveling(2);
 
         String expected =
                 "1. Bibliotekarz wybiera opcje dodania nowej pozycji książkowej.\n" +
@@ -78,7 +78,7 @@ public class LevelScenarioVisitorTest {
     @Test
     public void testLevel2() {
 
-        String result = runScenarioLeveling(2);
+        String result = runScenarioLeveling(3);
 
         String expected =
                 "1. Bibliotekarz wybiera opcje dodania nowej pozycji książkowej.\n" +

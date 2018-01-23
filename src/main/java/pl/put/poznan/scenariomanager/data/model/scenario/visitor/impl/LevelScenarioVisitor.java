@@ -33,7 +33,7 @@ public class LevelScenarioVisitor implements ScenarioVisitor {
 
         else{
             nextChildIndex=step.getParent().getNextChildIndex();
-            if(step.getNestingLevel()<=level) {
+            if(step.getNestingLevel()<level) {
                 stringBuilder.append(step.getParent().getIndex() + "." + nextChildIndex + ". " + step.getDescription() + "\n");
             }
             step.setIndex(step.getParent().getIndex() + "." + nextChildIndex );

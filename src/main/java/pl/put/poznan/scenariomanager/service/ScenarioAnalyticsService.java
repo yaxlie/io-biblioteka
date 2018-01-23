@@ -40,4 +40,6 @@ public interface ScenarioAnalyticsService {
      * @return List of scenario steps in text format
      */
     List<String> getNonActorSteps(Scenario scenario);
+
+
 }
