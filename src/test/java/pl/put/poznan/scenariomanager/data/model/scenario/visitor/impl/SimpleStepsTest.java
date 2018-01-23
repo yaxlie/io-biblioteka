@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by Marcin on 11.01.2018.
  */
-public class ActorStepsTest {
+public class SimpleStepsTest {
 
 
     private NotActorVisitor notActorVisitor;
@@ -28,21 +28,21 @@ public class ActorStepsTest {
     public void testCounter1(){
         Scenario scenario = scenario1(1);
         scenario.inspect(notActorVisitor);
-        assertEquals(notActorVisitor.getNoActorSteps().size(), 3);
+        assertEquals(notActorVisitor.getNoActorSteps().size(), 0);
     }
 
     @Test
     public void testCounter2(){
         Scenario scenario = scenario1(2);
         scenario.inspect(notActorVisitor);
-        assertEquals(notActorVisitor.getNoActorSteps().size(), 4);
+        assertEquals(notActorVisitor.getNoActorSteps().size(), 1);
     }
 
     @Test
     public void testCounter3(){
         Scenario scenario = scenario1(3);
         scenario.inspect(notActorVisitor);
-        assertEquals(notActorVisitor.getNoActorSteps().size(), 0);
+        assertEquals(notActorVisitor.getNoActorSteps().size(), 2);
     }
 
     private Scenario scenario1(int i) {
@@ -78,13 +78,13 @@ public class ActorStepsTest {
 
         switch (i){
             case 2:
-                steps = Arrays.asList(step1, step2, step3, step4, step2);
+                steps = Arrays.asList(step2);
                 break;
             case 3:
-                steps = Arrays.asList(step1);
+                steps = Arrays.asList(step2, step2, step3);
                 break;
             default:
-                steps = Arrays.asList(step1, step2, step3, step4, step5, step6);
+                steps = Arrays.asList(step1, step3, step4, step5, step6);
                 break;
         }
         return new Scenario(title, actors, steps);

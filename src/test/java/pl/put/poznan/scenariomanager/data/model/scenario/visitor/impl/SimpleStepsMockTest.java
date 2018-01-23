@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 /**
  * Created by Marcin on 21.01.2018.
  */
-public class ActorStepsMockTest {
+public class SimpleStepsMockTest {
 
     private NotActorVisitor mockVisitor;
     private Scenario mockScenario;
