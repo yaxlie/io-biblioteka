@@ -13,6 +13,7 @@ import pl.put.poznan.scenariomanager.service.ScenarioAnalyticsService;
 
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/scenario")
 public class ScenarioAnalysisController {
 
@@ -23,7 +24,10 @@ public class ScenarioAnalysisController {
     public ScenarioAnalysisController(ScenarioAnalyticsService scenarioAnalyticsService) {
         this.scenarioAnalyticsService = scenarioAnalyticsService;
     }
-
+@RequestMapping(value="/d")
+	public String Dummy() {
+	return "ff";
+}
     @RequestMapping(value = "/steps", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<Integer> countStepsRequest(@RequestBody ScenarioDto scenario) {
 
@@ -85,6 +89,7 @@ public class ScenarioAnalysisController {
     }
 
     @RequestMapping(value = "/numbered", method = RequestMethod.POST, produces = "application/json")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<String> numberedStepsRequest(@RequestBody ScenarioDto scenario) {
 
         logger.debug("\n" + scenario.toString());
