@@ -11,13 +11,15 @@ import pl.put.poznan.scenariomanager.data.dto.scenario.parser.ScenarioParseExcep
 import pl.put.poznan.scenariomanager.data.model.scenario.Scenario;
 import pl.put.poznan.scenariomanager.service.ScenarioAnalyticsService;
 
+import java.util.List;
+
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/scenario")
 public class ScenarioAnalysisController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ScenarioAnalysisController.class);
+    private static final Logger log = LoggerFactory.getLogger(ScenarioAnalysisController.class);
 
     private ScenarioAnalyticsService scenarioAnalyticsService;
 
@@ -31,92 +33,167 @@ public class ScenarioAnalysisController {
     @RequestMapping(value = "/steps", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<Integer> countStepsRequest(@RequestBody ScenarioDto scenario) {
 
-        logger.debug("\n" + scenario.toString());
-
-        ScenarioDtoParser scenarioParser = new ScenarioDtoParser();
-        Scenario parsedScenario;
+        log.info("Received 'count all steps' request...");
 
         try
         {
-            parsedScenario = scenarioParser.parse(scenario);
+            Scenario scenarioEntity = parseScenario(scenario);
+            int stepsCount = scenarioAnalyticsService.countAllSteps(scenarioEntity);
+
+            log.info("Successfully count scenario steps.");
+            log.debug(String.format("Number of count steps: %d", stepsCount));
+
+            return new ResponseEntity<>(stepsCount, HttpStatus.OK);
 
         } catch (ScenarioParseException e) {
 
-            logger.error("Failed to parse scenario. " + e.getMessage());
+            log.error("Failed to parse scenario.\n\t" + e.getMessage());
             e.printStackTrace();
 
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         } catch (Exception e) {
 
-            logger.error("Unexpected error occurred during scenario parse operation");
+            log.error("Unexpected error occurred during requested operation");
             e.printStackTrace();
 
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return new ResponseEntity<>(scenarioAnalyticsService.countAllSteps(parsedScenario), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/conditions", method = RequestMethod.POST, produces = "application/json")
     public ResponseEntity<Integer> countConditionsRequest(@RequestBody ScenarioDto scenario) {
 
-        logger.debug("\n" + scenario.toString());
-
-        ScenarioDtoParser scenarioParser = new ScenarioDtoParser();
-        Scenario parsedScenario;
+        log.info("Received 'count conditional steps' request...");
 
         try
         {
-            parsedScenario = scenarioParser.parse(scenario);
+            Scenario scenarioEntity = parseScenario(scenario);
+            int conditionsCount = scenarioAnalyticsService.countConditionalSteps(scenarioEntity);
+
+            log.info("Successfully count conditional steps.");
+            log.debug(String.format("Number of conditional steps is: %d", conditionsCount));
+
+            return new ResponseEntity<>(conditionsCount, HttpStatus.OK);
 
         } catch (ScenarioParseException e) {
 
-            logger.error("Failed to parse scenario. " + e.getMessage());
+            log.error("Failed to parse scenario. " + e.getMessage());
             e.printStackTrace();
 
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         } catch (Exception e) {
 
-            logger.error("Unexpected error occurred during scenario parse operation");
+            log.error("Unexpected error occurred during requested operation.");
             e.printStackTrace();
 
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return new ResponseEntity<>(scenarioAnalyticsService.countConditionalSteps(parsedScenario), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/numbered", method = RequestMethod.POST, produces = "application/json")
     @CrossOrigin(origins = "*")
     public ResponseEntity<String> numberedStepsRequest(@RequestBody ScenarioDto scenario) {
 
-        logger.debug("\n" + scenario.toString());
+        log.info("Received 'number steps' request...");
 
-        ScenarioDtoParser scenarioParser = new ScenarioDtoParser();
-        Scenario parsedScenario;
+        try {
 
-        try
-        {
-            parsedScenario = scenarioParser.parse(scenario);
+            Scenario scenarioEntity = parseScenario(scenario);
+            String numberedSteps = scenarioAnalyticsService.getNumberedSteps(scenarioEntity);
+
+            log.info("Successfully numbered steps.");
+            log.info(String.format("Numbered scenario:\n%s", numberedSteps));
+
+            return new ResponseEntity<>(numberedSteps, HttpStatus.OK);
 
         } catch (ScenarioParseException e) {
 
-            logger.error("Failed to parse scenario. " + e.getMessage());
+            log.error("Failed to parse scenario during 'number steps' request.\n\t" + e.getMessage());
             e.printStackTrace();
 
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         } catch (Exception e) {
 
-            logger.error("Unexpected error occurred during scenario parse operation");
+            log.error("Unexpected error occurred during requested operation");
             e.printStackTrace();
 
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
 
-        return new ResponseEntity<>(scenarioAnalyticsService.getNumberedSteps(parsedScenario), HttpStatus.OK);
+
+    @RequestMapping(value = "/nonactor", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<List<String>> nonActorStepsRequest(@RequestBody ScenarioDto scenario) {
+
+        log.info("Received collect non actor steps request...");
+
+        try
+        {
+            Scenario parsedScenario = parseScenario(scenario);
+            List<String> nonActorSteps = scenarioAnalyticsService.getNonActorSteps(parsedScenario);
+
+            log.info("Successfully collected non actor steps.");
+
+            return new ResponseEntity<>(nonActorSteps, HttpStatus.OK);
+
+        } catch (ScenarioParseException e) {
+
+            log.error("Failed to parse scenario. " + e.getMessage());
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e) {
+
+            log.error("Unexpected error occurred during scenario parse operation");
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @RequestMapping(value = "/levellimit", method = RequestMethod.POST, produces = "application/json")
+    public ResponseEntity<String> limitedStepsRequest(@RequestBody ScenarioDto scenario,
+                                                            @RequestParam(value = "level") int level) {
+
+        log.info("Received limit steps with level request...");
+
+        try
+        {
+            Scenario parsedScenario = parseScenario(scenario);
+            String nonActorSteps = scenarioAnalyticsService.getStepsWithLevelLimit(parsedScenario, level);
+
+            log.info("Successfully limited steps steps.");
+
+            return new ResponseEntity<>(nonActorSteps, HttpStatus.OK);
+
+        } catch (ScenarioParseException e) {
+
+            log.error("Failed to parse scenario. " + e.getMessage());
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
+        } catch (Exception e) {
+
+            log.error("Unexpected error occurred during scenario parse operation");
+            e.printStackTrace();
+
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    private Scenario parseScenario(ScenarioDto scenarioDto) throws ScenarioParseException {
+
+        log.debug("Received given scenario in the request:\n" + scenarioDto.toString());
+
+        ScenarioDtoParser scenarioParser = new ScenarioDtoParser();
+        return scenarioParser.parse(scenarioDto);
     }
 }
 

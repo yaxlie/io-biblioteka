@@ -1,36 +1,51 @@
 package pl.put.poznan.scenariomanager.data.model.scenario.visitor.impl;
 
+import org.junit.Before;
+import org.junit.Test;
 import pl.put.poznan.scenariomanager.data.model.scenario.Scenario;
 import pl.put.poznan.scenariomanager.data.model.scenario.step.ScenarioStep;
-import pl.put.poznan.scenariomanager.data.model.scenario.step.impl.ActorScenarioStep;
-import pl.put.poznan.scenariomanager.data.model.scenario.step.impl.ForEachScenarioStep;
-import pl.put.poznan.scenariomanager.data.model.scenario.step.impl.IfScenarioStep;
-import pl.put.poznan.scenariomanager.data.model.scenario.step.impl.SimpleScenarioStep;
-import pl.put.poznan.scenariomanager.data.model.scenario.visitor.ScenarioVisitor;
+import pl.put.poznan.scenariomanager.data.model.scenario.step.impl.*;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class SampleScenarioVisitor implements ScenarioVisitor {
+import static org.junit.Assert.assertEquals;
 
-    private StringBuilder stringBuilder;
+/**
+ * Created by Marcin on 11.01.2018.
+ */
+public class SimpleStepsTest {
 
-    public SampleScenarioVisitor() {
-        this.stringBuilder = new StringBuilder();
+
+    private NotActorVisitor notActorVisitor;
+
+    @Before
+    public void setUp() {
+        notActorVisitor = new NotActorVisitor();
     }
 
-    @Override
-    public void visit(ScenarioStep step) {
-
-        stringBuilder.append("Visiting step with description: \"" + step.getDescription() + "\"");
-        stringBuilder.append("\tNesting level is equal to: " + Integer.toString(step.getNestingLevel()));
+    @Test
+    public void testCounter1(){
+        Scenario scenario = scenario1(1);
+        scenario.inspect(notActorVisitor);
+        assertEquals(notActorVisitor.getNoActorSteps().size(), 0);
     }
 
-    public String getResult() {
-        return stringBuilder.toString();
+    @Test
+    public void testCounter2(){
+        Scenario scenario = scenario1(2);
+        scenario.inspect(notActorVisitor);
+        assertEquals(notActorVisitor.getNoActorSteps().size(), 1);
     }
 
-    public static String exampleUsage() {
+    @Test
+    public void testCounter3(){
+        Scenario scenario = scenario1(3);
+        scenario.inspect(notActorVisitor);
+        assertEquals(notActorVisitor.getNoActorSteps().size(), 2);
+    }
+
+    private Scenario scenario1(int i) {
 
         String title = "Dodanie nowej książki";
         List<String> actors = Arrays.asList("System", "Bibliotekarz");
@@ -49,22 +64,30 @@ public class SampleScenarioVisitor implements ScenarioVisitor {
         ActorScenarioStep step5 = new ActorScenarioStep("Bibliotekarz zatwierdza dodanie książki.", "Bibliotekarz");
         ActorScenarioStep step6 = new ActorScenarioStep("System informuje o poprawnym dodaniu książki.", "System");
 
+        ElseScenarioStep step7 = new ElseScenarioStep(step4);
+
+        List<ScenarioStep> steps;
+
         step4.addStep(step41);
         step4.addStep(step42);
         step4.addStep(step43);
-
         step43.addStep(step431);
         step43.addStep(step432);
         step43.addStep(step433);
         step43.addStep(step434);
 
-        List<ScenarioStep> steps = Arrays.asList(step1, step2, step3, step4, step5, step6);
-
-        Scenario scenario = new Scenario(title, actors, steps);
-
-        SampleScenarioVisitor sampleVisitor = new SampleScenarioVisitor();
-        scenario.inspect(sampleVisitor);
-
-        return sampleVisitor.getResult();
+        switch (i){
+            case 2:
+                steps = Arrays.asList(step2);
+                break;
+            case 3:
+                steps = Arrays.asList(step2, step2, step3);
+                break;
+            default:
+                steps = Arrays.asList(step1, step3, step4, step5, step6);
+                break;
+        }
+        return new Scenario(title, actors, steps);
     }
+
 }
